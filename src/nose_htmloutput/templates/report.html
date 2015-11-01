@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Unit Test Report</title>
+    <title>Nose Tests Report</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
 <style>
 body {
-    font-family: Calibri, "Trebuchet MS", sans-serif;
+    font-family: Calibri, sans-serif;
+    font-size: 12px;
 }
 * {
     word-break: break-all;
@@ -16,18 +17,24 @@ table, td, th, .dataid {
     border-collapse: collapse;
     background: #fff;
 }
+th, td {
+    padding: 2px 4px;
+}
 section {
     background: rgba(0, 0, 0, 0.05);
     margin: 2ex;
     padding: 1ex;
-    border: 1px solid #999;
-    border-radius: 5px;
+    border: 1px solid #aaa;
 }
 h1 {
     font-size: 130%;
 }
 h2 {
-    font-size: 120%;
+    font-size: 110%;
+}
+h2 > .h2-stats {
+    font-size: smaller;
+    color: #888;
 }
 h3 {
     font-size: 100%;
@@ -35,7 +42,7 @@ h3 {
 h4 {
     font-size: 85%;
 }
-h1, h2, h3, h4, a[href] {
+h2, h3, h4, a[href] {
     cursor: pointer;
     color: #0074d9;
     text-decoration: none;
@@ -50,14 +57,15 @@ a.success {
     color: #3d9970;
 }
 pre {
-    font-family: 'Consolas', 'Deja Vu Sans Mono',
-                 'Bitstream Vera Sans Mono', 'Monaco',
-                 'Courier New', monospace;
+    font-family: monospace;
 }
-
 .test-details,
 .traceback {
     display: none;
+}
+pre.traceback {
+    overflow: scroll;
+    font-size: 90%;
 }
 section:target .test-details {
     display: block;
@@ -79,12 +87,12 @@ section:target .test-details {
             </tr>
             {% for class, group in report.items() %}
                 <tr>
-                    <td>{{ class }}</td>
-                    <td{% if group.stats.failures %} class="failed"{% endif %}>{{ group.stats.failures }}</td>
-                    <td{% if group.stats.errors %} class="failed"{% endif %}>{{ group.stats.errors   }}</td>
-                    <td>{{ group.stats.skipped  }}</td>
-                    <td>{{ group.stats.passes   }}</td>
-                    <td>{{ group.stats.total    }}</td>
+                    <td><tt>{{ class }}</tt></td>
+                    <td{% if group.stats.failures %} class="failed"{% endif %}><tt>{{ group.stats.failures }}</tt></td>
+                    <td{% if group.stats.errors %} class="failed"{% endif %}><tt>{{ group.stats.errors   }}</tt></td>
+                    <td><tt>{{ group.stats.skipped  }}</tt></td>
+                    <td><tt>{{ group.stats.passes   }}</tt></td>
+                    <td><tt>{{ group.stats.total    }}</tt></td>
                 </tr>
             {% endfor %}
             <tr>
@@ -101,7 +109,7 @@ section:target .test-details {
     {% for class, group in report.items() %}
         {% if group.stats.failures or group.stats.errors %}
             <section>
-                <h2>{{ class }} ({{ group.stats.failures }} failures, {{ group.stats.errors }} errors)</h2>
+                <h2><tt>{{ class }}</tt> <span class="h2-stats">({{ group.stats.failures }} failures, {{ group.stats.errors }} errors)</span></h2>
                 <div>
                     {% for test in group.tests %}
                         {% if test.failed and test.type != 'skipped' %}
