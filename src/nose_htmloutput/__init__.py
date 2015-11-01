@@ -103,7 +103,6 @@ class HtmlOutput(Plugin):
             self.jinja = Environment(
                 loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')),
                 trim_blocks=True,
-                lstrip_blocks=True
             )
             self.stats = {'errors': 0, 'failures': 0, 'passes': 0, 'skipped': 0}
             self.report_data = defaultdict(Group)
